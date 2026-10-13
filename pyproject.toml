@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "hidden-agenda-bench"
+version = "0.1.0"
+description = "Tool-free auxiliary computation concealment benchmark built on Inspect AI"
+requires-python = ">=3.11"
+dependencies = ["inspect-ai==0.3.271"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+analysis = ["matplotlib>=3.9,<4"]
+
+[project.scripts]
+hidden-agenda = "hidden_agenda.cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["hidden_agenda"]
