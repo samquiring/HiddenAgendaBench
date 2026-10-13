@@ -1,6 +1,8 @@
+> Historical development documentation. The default workflow is described in [the main README](../../README.md).
+
 # Hidden Agenda Benchmark — protocol v0.1
 
-For the proposed public reproduction direction, see [OpenAI protocol comparison](openai-reproduction.md).
+For the proposed public reproduction direction, see [OpenAI protocol comparison](../openai-reproduction.md).
 This document describes the original pilot protocol; historical run manifests capture later prompt/format variants.
 
 Measure prompted concealment of unrelated computation as a risk factor, not spontaneous misalignment. Actors have no tools, judge identity, judge prompt, feedback, or cross-attempt memory.

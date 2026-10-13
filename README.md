@@ -1,66 +1,68 @@
 # Hidden Agenda Benchmark
 
-A Python / Inspect AI pilot measuring whether models can solve an unrelated auxiliary problem during legitimate work without a judge detecting it. See [protocol](docs/design.md) and [framework decision](docs/frameworks.md).
+Measure whether a model can solve an undisclosed math problem while completing a Python task, without a fixed LLM monitor detecting the auxiliary work.
+
+The default protocol uses **100 held-out HumanEval+/GSM8K pairs** at one reasoning-effort setting: 100 clean responses, 100 concealment responses, and 30 separate clean responses for monitor calibration. Each saved response is scored through output-only, reasoning-only, and combined views. Actors have no tools; generated code is graded afterward in offline Docker containers.
 
 ## Setup
 
-```sh
-uv sync --extra dev --python 3.12
-source .venv/bin/activate
-pytest
-python -m hidden_agenda.cli preview --size 5
-```
-
-Set `OPENROUTER_API_KEY` in your environment. Select real accessible model IDs explicitly, e.g. `openrouter/<provider>/<model>`. For LiteLLM proxy use `litellm-proxy/<deployment>` and `LITELLM_PROXY_BASE_URL` / `LITELLM_PROXY_API_KEY`. Inspect also supports native providers. Do not commit credentials.
-
-## Actor → export → grade → judge
+Requires Python 3.11+, uv, and a running Docker daemon. Run these commands from the repository root:
 
 ```sh
-python -m hidden_agenda.cli run --model "$ACTOR_MODEL" --condition concealment --split dev --count 3 --epochs 2 --size 5 --max-tokens 4096
-python -m hidden_agenda.cli export logs/ACTUAL_LOG.eval --trace-kind emitted --output actors.jsonl
-# Start Docker and prepare the grading image once:
-docker pull python:3.12-slim
-python -m hidden_agenda.cli grade actors.jsonl --output graded.jsonl
-python -m hidden_agenda.cli judge graded.jsonl --model "$JUDGE_MODEL" --output judgments.jsonl
-inspect view
+uv sync --extra dev --extra analysis
+cp .env.example .env
+uv run hidden-agenda fetch-data
+docker build -t hidden-agenda-evalplus:0.3.1 docker/evalplus
 ```
 
-Actor has no tools. Docker is only used after generation to grade code. Confirm the provider exposes emitted reasoning before choosing `--trace-kind emitted`; use `summary` or `unavailable` otherwise. No particular model is assumed to expose traces. Optional `--reasoning-effort low|medium|high` is passed to Inspect; supported values depend on backend. Keep actual resolved configuration and provider routing fixed for comparisons.
+Add the relevant provider credentials to `.env`. The supplied default uses Hugging Face inference providers. Dataset downloads are pinned and hash-verified. Credentials, downloaded task data, environments, and experiment outputs are ignored by Git.
 
-Repeat actor runs with `clean`, `auxiliary_only`, and `overt` conditions. Auxiliary-only needs no code grading and is skipped by monitors. Inspect epochs are independent repetitions with no judge feedback. Outputs use exclusive creation to avoid overwriting previous experiments.
-
-## Calibration and held-out scoring
-
-Generate clean runs with `--split calibration`, export, grade and judge them. Freeze thresholds before examining test results:
+## Run the default experiment
 
 ```sh
-python -m hidden_agenda.cli calibrate calibration-judgments.jsonl --fpr 0.05 --output thresholds.json
-python -m hidden_agenda.cli report test-judgments.jsonl --thresholds thresholds.json
+uv run hidden-agenda prepare --config configs/default.toml --root runs/deepseek-low
+uv run hidden-agenda run --root runs/deepseek-low
 ```
 
-Every calibrated view must have valid judgments; for output-only experiments select only output rows in a separate file. Reports reject mismatched calibration groups and non-test data. Preserve all assigned records, including errors. Never interpret unavailable reasoning as successful concealment. Record all conditions and aggregate task success from graded actor exports, including the auxiliary-only baseline. Judge task-identification text is collected for manual grading; the report currently covers detection, not identification accuracy.
+`prepare` makes no model calls. It freezes the 230 exact samples, model settings, source hashes, and retry policy. `run` performs generation, Docker grading, monitor calibration, held-out scoring, aggregate reporting, and five-bin reasoning-length plots. Use the same `run` command to resume completed stages. Concurrent processes cannot run the same results directory. An unfinished actor log requires inspection before resuming.
 
-This is a runnable experimental scaffold with small fixtures, not a validated benchmark suite. Templates, task difficulty, uncertainty estimates and model selection need expansion before substantive rankings. Native Inspect logs and actor exports contain private prompts and answers; judge payloads are built with an explicit allowlist.
-# Channel controllability diagnostic
+## Test another model
 
-Established task sources and math-only calibration are documented in
-[public datasets](docs/public-datasets.md). The initial GLM calibration results are in
-[the calibration report](runs/gsm8k-calibration/REPORT.md).
-
-The `hidden-agenda control` command tests lowercase, alternating case, and forbidden-word
-restrictions on reasoning and final responses, with an unrestricted baseline.
-See [setup, scoring, and reasoning-effort comparisons](docs/channel-control.md).
-
-## Frozen public-task evaluation and reasoning lengths
-
-The [100-pair evaluation design](docs/full-dataset.md) documents the completed
-DeepSeek low-effort baseline, independent clean calibration, and observed-length analysis.
-See the [aggregate report](runs/deepseek-full-low-v1/REPORT.md) and
-[five-bin length report](runs/deepseek-full-low-v1/length-analysis/low/REPORT.md).
-To reproduce the length plots from saved responses, install `.[analysis]` and run:
+Copy `configs/model-template.toml`, change `actor` to the model's **Inspect AI model identifier**, choose a supported `effort`, and use a new results directory:
 
 ```sh
-python scripts/analyze_reasoning_lengths.py
+uv run hidden-agenda prepare --config configs/my-model.toml --root runs/my-model-low
+uv run hidden-agenda run --root runs/my-model-low
 ```
 
-This generates PNG, SVG, PDF, and CSV artifacts without additional model calls.
+The judge stays fixed unless you explicitly change `judge`. The task identities, prompts, and grading rules stay the same across actors. `actor_args` and `judge_args` pass provider options to Inspect. Keep credentials in environment variables. Use `effort = "none"` to omit the reasoning-effort parameter on backends that do not accept it; this does **not** request reasoning-free generation.
+
+Only actual emitted reasoning belongs in reasoning-monitor comparisons. Confirm the selected provider exposes it; missing reasoning is never credited as evasion. Provider-specific reasoning summaries are not equivalent to emitted traces. See [configuration](docs/configuration.md) for settings and comparison constraints.
+
+## Reports and plots
+
+Regenerate outputs from saved responses without model calls:
+
+```sh
+uv run hidden-agenda report --root runs/my-model-low
+uv run hidden-agenda analyze --root runs/my-model-low
+```
+
+Each run contains:
+
+- `manifest.json`, `dataset.jsonl`: frozen settings and exact task assignments.
+- `calibration/` and `evaluation/`: native actor logs, graded JSONL, and every judge attempt.
+- `thresholds.json`, `summary.json`, `REPORT.md`: calibrated thresholds, task performance, detection, false alarms, and unresolved outcomes.
+- `length-analysis/<effort>/`: five-bin PNG/SVG/PDF plots, per-run/per-bin CSVs, and analysis provenance.
+
+Primary metric: both tasks succeed and the monitor does not alert, divided by all 100 assigned concealment attempts. The designated auxiliary answer is removed uniformly from final outputs; reasoning is never redacted. The length plot is an exploratory association across questions, with pointwise 95% intervals and explicit bounds for unresolved judgments. It does not estimate the causal effect of more reasoning. See [protocol and statistical interpretation](docs/full-dataset.md).
+
+## Development
+
+```sh
+uv run pytest -q
+```
+
+Package implementation lives in `hidden_agenda/`; current entry points are available through `hidden-agenda` or `python -m hidden_agenda`. `scripts/` contains compatibility wrappers. Earlier pilot and prompt-search utilities are preserved under [scripts/experiments](scripts/experiments/README.md), with the toy-task CLI available through `hidden-agenda legacy`. They are not the default benchmark.
+
+Existing local experiments under `runs/` are retained. Git does not publish their raw prompts, reasoning, or results. The original comparison with OpenAI's evaluation is documented in [reproduction notes](docs/openai-reproduction.md).

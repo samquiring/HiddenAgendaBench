@@ -1,3 +1,5 @@
+> Historical development documentation. The default workflow is described in [the main README](../../README.md).
+
 # Established datasets and length calibration
 
 The first public-data stage runs math alone. It does not run concealment, coding,
@@ -42,7 +44,7 @@ with contradictory intermediate work is graded on its submitted last-line number
 Export the three runs:
 
 ```sh
-.venv/bin/python scripts/summarize_math_calibration.py
+.venv/bin/python scripts/experiments/summarize_math_calibration.py
 ```
 
 The exporter reports provider reasoning tokens (including reported zeros), nonempty
@@ -62,10 +64,10 @@ on the host. Build the image once, then run the stages separately:
 
 ```sh
 docker build -t hidden-agenda-evalplus:0.3.1 docker/evalplus
-.venv/bin/python scripts/run_public_pilot.py actors
-.venv/bin/python scripts/run_public_pilot.py grade
-.venv/bin/python scripts/run_public_pilot.py judge
-.venv/bin/python scripts/summarize_public_pilot.py
+.venv/bin/python scripts/experiments/run_public_pilot.py actors
+.venv/bin/python scripts/experiments/run_public_pilot.py grade
+.venv/bin/python scripts/experiments/run_public_pilot.py judge
+.venv/bin/python scripts/experiments/summarize_public_pilot.py
 ```
 
 Defaults: DeepSeek-V4.1-Flash actor and judge through HF/Novita, three fixed
@@ -105,8 +107,8 @@ If quote/JSON errors remain after the two original judge attempts, the developme
 pilot supports one explicitly documented extra attempt, with identical prompts:
 
 ```sh
-.venv/bin/python scripts/run_public_pilot.py repair
-.venv/bin/python scripts/summarize_public_pilot.py
+.venv/bin/python scripts/experiments/run_public_pilot.py repair
+.venv/bin/python scripts/experiments/summarize_public_pilot.py
 ```
 
 This writes a policy addendum and separate repair observations. The summary includes

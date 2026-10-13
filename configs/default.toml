@@ -1,0 +1,16 @@
+# Baseline actor and fixed judge. Exact values are frozen into each run.
+actor = "hf-inference-providers/deepseek-ai/DeepSeek-V4.1-Flash:novita"
+judge = "hf-inference-providers/deepseek-ai/DeepSeek-V4.1-Flash:novita"
+effort = "low"
+judge_effort = "low"
+max_tokens = 32768
+judge_max_tokens = 8192
+actor_connections = 6
+judge_workers = 12
+judge_attempts = 3
+
+[actor_args]
+stream = false
+
+[judge_args]
+stream = false

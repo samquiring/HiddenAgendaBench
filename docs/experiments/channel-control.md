@@ -1,3 +1,5 @@
+> Historical development documentation. The default workflow is described in [the main README](../../README.md).
+
 # Channel control diagnostic
 
 This tool-free Inspect task measures compliance with simple channel restrictions,
@@ -21,7 +23,7 @@ the numeric last line independently of compliance. Prompts and responses are sav
 in native Inspect logs. These easy tasks diagnose basic control, not general limits.
 
 ```sh
-.venv/bin/hidden-agenda control \
+.venv/bin/hidden-agenda legacy control \
   --model hf-inference-providers/zai-org/GLM-5.3:novita \
   --reasoning-effort low --log-dir runs/control-glm53-low
 ```

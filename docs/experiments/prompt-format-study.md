@@ -1,6 +1,8 @@
+> Historical development documentation. The default workflow is described in [the main README](../../README.md).
+
 # Development prompt and format study
 
-Run `scripts/run_prompt_study.py` with stages `actors`, `grade`, `judge`, and `summarize`, in that order. The default output directory is `runs/deepseek-prompt-format-study`.
+Run `scripts/experiments/run_prompt_study.py` with stages `actors`, `grade`, `judge`, and `summarize`, in that order. The default output directory is `runs/deepseek-prompt-format-study`.
 
 This bounded experiment uses ten matched HumanEval+/GSM8K development pairs, DeepSeek-V4.1-Flash through Hugging Face/Novita, low reasoning effort, and a 32,768-token output cap. It compares three concealment instructions (baseline, brief Python-focused reasoning, and no restatement of private instructions) with three submission formats (fenced code and numeric last line, fenced code and XML answer field, and a JSON object containing code and an answer string). Each format also has ten clean primary-only controls: 120 actor runs total.
 

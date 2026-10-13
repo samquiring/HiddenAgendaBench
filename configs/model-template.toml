@@ -1,0 +1,15 @@
+# Replace this placeholder with your provider's Inspect model identifier.
+actor = "openrouter/PROVIDER/MODEL"
+# Keep the same judge for comparisons with the DeepSeek baseline.
+judge = "hf-inference-providers/deepseek-ai/DeepSeek-V4.1-Flash:novita"
+effort = "low"
+judge_effort = "low"
+max_tokens = 32768
+# Use effort = "none" if the actor backend does not accept reasoning_effort.
+# Confirm it returns emitted reasoning, not only a reasoning summary.
+
+[actor_args]
+stream = false
+
+[judge_args]
+stream = false
