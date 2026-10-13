@@ -865,6 +865,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "inspect-ai" },
+    { name = "python-dotenv" },
 ]
 
 [package.optional-dependencies]
@@ -880,6 +881,7 @@ requires-dist = [
     { name = "inspect-ai", specifier = "==0.3.271" },
     { name = "matplotlib", marker = "extra == 'analysis'", specifier = ">=3.9,<4" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8" },
+    { name = "python-dotenv", specifier = ">=1,<2" },
 ]
 provides-extras = ["dev", "analysis"]
 

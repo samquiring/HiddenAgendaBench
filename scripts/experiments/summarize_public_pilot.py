@@ -4,7 +4,7 @@ from collections import defaultdict
 import json
 from pathlib import Path
 import statistics
-from hidden_agenda.cli import read_rows
+from hidden_agenda.io import read_rows
 
 
 def main():

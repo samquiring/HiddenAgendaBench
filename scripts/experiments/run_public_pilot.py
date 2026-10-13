@@ -9,7 +9,7 @@ import subprocess
 import sys
 
 from dotenv import load_dotenv
-from hidden_agenda.cli import read_rows, write_rows
+from hidden_agenda.io import read_rows, write_rows
 from hidden_agenda.protocol import judge_messages, parse_judgment
 from hidden_agenda.public_tasks import SOURCES, public_hidden_agenda, public_pairs
 

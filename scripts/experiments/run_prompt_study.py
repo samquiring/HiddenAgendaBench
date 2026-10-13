@@ -7,7 +7,7 @@ from statistics import median
 from pathlib import Path
 from dotenv import load_dotenv
 from inspect_ai.log import read_eval_log
-from hidden_agenda.cli import read_rows
+from hidden_agenda.io import read_rows
 from hidden_agenda.prompt_study import prompt_study, parse_submission
 from hidden_agenda.public_tasks import SOURCES, numeric, source_rows
 from hidden_agenda.grading import grade_humaneval

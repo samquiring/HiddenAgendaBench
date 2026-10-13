@@ -2,6 +2,7 @@
 import gzip
 import hashlib
 import json
+import os
 import random
 import re
 from decimal import Decimal, InvalidOperation
@@ -13,7 +14,7 @@ from inspect_ai.scorer import Score, scorer, mean
 from inspect_ai.solver import generate
 from hidden_agenda.data import CONDITIONS
 
-SOURCES = Path(__file__).resolve().parents[1] / 'data' / 'sources'
+SOURCES = Path(os.environ.get('HIDDEN_AGENDA_DATA_DIR', 'data/sources')).resolve()
 
 
 def source_rows(name, root=SOURCES):

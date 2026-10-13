@@ -1,6 +1,6 @@
 from inspect_ai import eval
 from hidden_agenda.tasks import hidden_agenda
-from hidden_agenda.cli import export_log
+from hidden_agenda.legacy_cli import export_log
 
 
 def test_inspect_offline_roundtrip(tmp_path):
@@ -20,7 +20,7 @@ def test_successful_trace_and_monitor_roundtrip(tmp_path, monkeypatch):
     from inspect_ai.model import get_model, ModelOutput, ChatMessageAssistant, ChatCompletionChoice
     from inspect_ai._util.content import ContentReasoning, ContentText
     from hidden_agenda.data import instances
-    from hidden_agenda.cli import write_rows, judge_records, read_rows
+    from hidden_agenda.legacy_cli import write_rows, judge_records, read_rows
 
     answer = next(instances(count=1))["answer"]
     output = ModelOutput(model="mockllm", choices=[ChatCompletionChoice(message=ChatMessageAssistant(content=[

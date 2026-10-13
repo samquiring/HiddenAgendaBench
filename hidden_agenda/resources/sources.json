@@ -1,0 +1,22 @@
+{
+  "gsm8k-test.jsonl": {
+    "url": "https://raw.githubusercontent.com/openai/grade-school-math/3101c7d5072418e28b9008a6636bde82a006892c/grade_school_math/data/test.jsonl",
+    "sha256": "3730d312f6e3440559ace48831e51066acaca737f6eabec99bccb9e4b3c39d14",
+    "bytes": 749738
+  },
+  "gsm8k-LICENSE": {
+    "url": "https://raw.githubusercontent.com/openai/grade-school-math/3101c7d5072418e28b9008a6636bde82a006892c/LICENSE",
+    "sha256": "86bbb73e855821d7c401912fd4bf82e34313e6e3b6fd6f909f2b6cc9e209a53b",
+    "bytes": 1062
+  },
+  "HumanEvalPlus.jsonl.gz": {
+    "url": "https://github.com/evalplus/humanevalplus_release/releases/download/v0.1.10/HumanEvalPlus.jsonl.gz",
+    "sha256": "272720b90ac375502c8ed23cd791c2a93dfb22a911641a494da74a426c09f101",
+    "bytes": 925932
+  },
+  "evalplus-LICENSE": {
+    "url": "https://raw.githubusercontent.com/evalplus/evalplus/master/LICENSE",
+    "sha256": "fcc1f77fe5443b21bfc4dfcc3d66f7654f599b91582df771850e5e876986a103",
+    "bytes": 11558
+  }
+}
