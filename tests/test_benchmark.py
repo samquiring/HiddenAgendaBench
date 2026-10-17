@@ -106,6 +106,22 @@ def test_incomplete_calibration_stops_before_evaluation(dataset,monkeypatch):
         benchmark.run(dataset,manifest)
     assert stages==['calibration']
 
+def test_explicit_calibration_transfer_is_frozen(dataset):
+    source=dataset.parent/'reference'
+    benchmark.freeze(source)
+    value={view:dict(valid=30,threshold=0,comparison='>') for view in benchmark.VIEWS}
+    (source/'thresholds.json').write_text(json.dumps({'low':value}))
+    benchmark.freeze(dataset,RunConfig(actor='other/actor',effort='high'))
+    assert benchmark.reuse_thresholds(dataset,source)=={'high':value}
+    assert benchmark.thresholds(dataset)=={'high':value}
+    assert (dataset/'calibration-transfer.json').exists()
+    other=dataset.parent/'late'
+    benchmark.freeze(other)
+    (other/'evaluation/low/actors').mkdir(parents=True)
+    (other/'evaluation/low/actors/started.eval').touch()
+    with pytest.raises(ValueError,match='Cannot change calibration'):
+        benchmark.reuse_thresholds(other,source)
+
 @pytest.mark.parametrize('kwargs',[{'max_tokens':0},{'judge_workers':True},{'actor_args':{'api_key':'not-a-real-key'}}])
 def test_invalid_or_secret_settings_rejected(kwargs):
     with pytest.raises(ValueError):RunConfig(**kwargs)

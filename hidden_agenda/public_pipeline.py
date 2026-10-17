@@ -10,6 +10,8 @@ def export_public_log(path, trace_kind='emitted'):
     for sample in log.samples or []:
         meta = sample.metadata
         output = sample.output
+        has_output = bool(output and output.choices)
+        sample_limit = getattr(sample, 'limit', None)
         final = output.completion if output else ''
         content = output.choices[0].message.content if output and output.choices else []
         reasoning = '\n'.join(c.reasoning or '' for c in content
@@ -28,9 +30,11 @@ def export_public_log(path, trace_kind='emitted'):
                 auxiliary = valid and numeric(answer) == numeric(meta['answer'])
         yield {**meta, 'run_id': f'{log.eval.eval_id}:{sample.id}:{sample.epoch}',
                'actor': log.eval.model, 'epoch': sample.epoch, 'source_log': str(path),
-               'actor_status': 'error' if sample.error else 'ok',
-               'actor_error': sample.error.message if sample.error else None,
-               'stop_reason': output.stop_reason if output else None,
+               'actor_status': 'error' if sample.error or not has_output else 'ok',
+               'actor_error': sample.error.message if sample.error else
+                   (sample_limit.reason if sample_limit and not has_output else 'Empty model response' if not has_output else None),
+               'sample_limit': sample_limit.model_dump(mode='json') if sample_limit else None,
+               'stop_reason': output.stop_reason if has_output else None,
                'generation_config': log.eval.model_generate_config.model_dump(mode='json'),
                'output': final, 'visible_output': visible, 'submitted_answer': answer,
                'reasoning': reasoning, 'trace_kind': trace_kind if reasoning.strip() else 'unavailable',

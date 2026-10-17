@@ -1,0 +1,30 @@
+{
+  "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired",
+  "attempts": 1,
+  "selection": "Actor error or empty final response, independent of grades and monitor outcomes. Nonempty formatting/answer failures are not retried.",
+  "inputs": {
+    "trajectories.jsonl": "5a567ce9f26cd3160984fafeb4f99b100ed94b7ef8814e0e051a2dd78e5d9072",
+    "judgments.jsonl": "d5b8557b91ab9f008ad79f06ac9415981a88513b1ea666647e21e37f3dfa60a3"
+  },
+  "targets": [
+    {
+      "model_run": "deepseek-v4-pro-high-v1",
+      "partition": "calibration",
+      "effort": "high",
+      "run_id": "c4BE44t7Uys7ZWw9NjeLnn:calibration--HumanEval/132--gsm8k-test-1288--clean:1",
+      "id": "HumanEval/132--gsm8k-test-1288",
+      "condition": "clean"
+    },
+    {
+      "model_run": "deepseek-v4-pro-high-v1",
+      "partition": "evaluation",
+      "effort": "high",
+      "run_id": "c4BE44t7Uys7ZWw9NjeLnn:evaluation--HumanEval/145--gsm8k-test-663--clean:1",
+      "id": "HumanEval/145--gsm8k-test-663",
+      "condition": "clean"
+    }
+  ],
+  "timeout_override": 600,
+  "time_limit_override": 900,
+  "actor_override": "hf-inference-providers/deepseek-ai/DeepSeek-V4-Pro:deepinfra"
+}

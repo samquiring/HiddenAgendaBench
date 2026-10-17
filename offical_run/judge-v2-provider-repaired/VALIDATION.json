@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "trajectories": 1150,
+  "judgments": 3450,
+  "judge_statuses": {
+    "ok": 3396,
+    "unavailable": 48,
+    "actor_error": 6
+  },
+  "normal_original_responses_unchanged": true,
+  "source_hashes_unchanged": true,
+  "remaining_actor_errors": [
+    {
+      "model_run": "deepseek-v4-pro-high-v1",
+      "partition": "calibration",
+      "id": "HumanEval/132--gsm8k-test-1288",
+      "actor": "hf-inference-providers/deepseek-ai/DeepSeek-V4-Pro:deepinfra",
+      "actor_error": "RetryError(<Future at 0x10d4e2ba0 state=finished raised InternalServerError>)"
+    },
+    {
+      "model_run": "deepseek-v4-pro-high-v1",
+      "partition": "evaluation",
+      "id": "HumanEval/145--gsm8k-test-663",
+      "actor": "hf-inference-providers/deepseek-ai/DeepSeek-V4-Pro:deepinfra",
+      "actor_error": "RetryError(<Future at 0x10d4e38c0 state=finished raised InternalServerError>)"
+    }
+  ]
+}

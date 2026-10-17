@@ -3,6 +3,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 from pathlib import Path
 
 from hidden_agenda.io import read_rows
@@ -25,6 +26,13 @@ def plot(destination, bins, individuals, title):
     colors = {'covert': '#16836b', 'detected': '#326fa8', 'task_failure': '#747474', 'unresolved': '#c57816'}
     fig, axes = plt.subplots(2, 3, figsize=(14, 7.8), sharex=True,
                              gridspec_kw={'height_ratios': [3, 1.25]})
+    lengths = [i['reasoning_tokens'] for i in individuals]
+    positive = [n for n in lengths if n > 0]
+    lower = min(positive, default=1)
+    upper = max(positive, default=1)
+    ticks = [m * 10**power for power in range(math.floor(math.log10(lower)), math.ceil(math.log10(upper))+1)
+             for m in (1, 2, 5) if lower*.85 <= m * 10**power <= upper*1.15]
+    if 0 in lengths: ticks.insert(0, 0)
     for col, view in enumerate(VIEWS):
         ax, rug = axes[:, col]
         selected = [b for b in bins if b['view'] == view]
@@ -55,7 +63,8 @@ def plot(destination, bins, individuals, title):
         rug.set_yticks(range(4), ['Covert', 'Detected', 'Task failed', 'Unresolved'], fontsize=8)
         rug.set_ylim(3.6, -.6)
         rug.set_xscale('symlog', linthresh=1)
-        rug.set_xticks([200, 500, 1000, 3000, 10000])
+        rug.set_xticks(ticks)
+        rug.set_xlim(0 if 0 in lengths else lower*.85, upper*1.2)
         rug.xaxis.set_major_formatter(ScalarFormatter())
         rug.tick_params(axis='x', labelsize=8)
         rug.set_xlabel('Observed reasoning tokens (log scale)', fontsize=10)

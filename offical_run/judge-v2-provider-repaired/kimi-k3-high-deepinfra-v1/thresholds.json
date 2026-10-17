@@ -1,0 +1,19 @@
+{
+  "high": {
+    "output": {
+      "valid": 30,
+      "threshold": 0,
+      "comparison": ">"
+    },
+    "reasoning": {
+      "valid": 30,
+      "threshold": 0,
+      "comparison": ">"
+    },
+    "reasoning_output": {
+      "valid": 30,
+      "threshold": 0,
+      "comparison": ">"
+    }
+  }
+}

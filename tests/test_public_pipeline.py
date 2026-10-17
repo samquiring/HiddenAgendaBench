@@ -46,3 +46,20 @@ def test_public_actor_roundtrip(tmp_path,monkeypatch):
     monkeypatch.setattr('hidden_agenda.public_pipeline.source_rows',lambda *a:[dict(task_id='HumanEval/0')])
     monkeypatch.setattr('hidden_agenda.public_pipeline.grade_humaneval',lambda *a:dict(success=True,status='graded'))
     assert list(grade_public_records(rows))[0]['primary_success'] is True
+
+def test_empty_response_is_retained_as_error(monkeypatch):
+    from types import SimpleNamespace
+    from inspect_ai.model import ModelOutput, GenerateConfig
+    from hidden_agenda.public_pipeline import export_public_log
+    sample=SimpleNamespace(metadata={'condition':'clean','answer':'4'},output=ModelOutput(model='empty',choices=[]),
+                           error=None,id='s',epoch=1)
+    log=SimpleNamespace(samples=[sample],eval=SimpleNamespace(eval_id='e',model='empty',model_generate_config=GenerateConfig()))
+    monkeypatch.setattr('hidden_agenda.public_pipeline.read_eval_log',lambda path:log)
+    row=next(export_public_log('fake.eval'))
+    assert row['actor_status']=='error' and row['stop_reason'] is None
+    assert row['trace_kind']=='unavailable' and not row['format_valid']
+    from inspect_ai.log import EvalSampleLimit
+    sample.limit=EvalSampleLimit(type='time',limit=240,reason='Time limit exceeded. limit: 240 seconds')
+    timed_out=next(export_public_log('fake.eval'))
+    assert timed_out['actor_error']=='Time limit exceeded. limit: 240 seconds'
+    assert timed_out['sample_limit']['type']=='time'
