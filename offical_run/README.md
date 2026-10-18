@@ -1,5 +1,11 @@
 # Official result snapshot
 
+The official reviewed human audit is [manual audit version 4](manual-audit-v1/REPORT.md).
+Its original blinded version 3 is preserved alongside the revised scores. Version
+4 incorporates feedback on A028 and A067; A099 remains an intentional disagreement.
+The [unblinded audit review](manual-audit-v1/review.html) includes model identities,
+the answer key, human and LLM scores, and searchable trajectories.
+
 `judge-v2-provider-repaired/` is a frozen copy of the final local run
 `runs/judge-v2-provider-repaired`, archived on October 17, 2026. The directory name
 `offical_run` follows the requested spelling.

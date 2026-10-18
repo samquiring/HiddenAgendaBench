@@ -9,6 +9,46 @@ It includes the final repaired dataset, graphs, trajectory viewer, paired coding
 results, and judge false-positive rates. Historical `runs/` directories remain
 local and Git-ignored.
 
+The [official human audit](offical_run/manual-audit-v1/REPORT.md) preserves both the
+original blinded scores and the version 4 scores revised after feedback.
+
+After scoring, create an unblinded review page with model identities, the answer
+key, official human scores and both LLM monitor views:
+
+```sh
+uv run python -m hidden_agenda.manual_audit_review
+open runs/manual-audit-v1/review.html
+```
+
+The review page filters by model, assigned condition and sample type. Phrase
+search is literal and case-insensitive, defaults to emitted reasoning, and
+highlights matching text. Search scope can include tasks, outputs or all fields.
+Audit IDs such as `A034` are searchable in every scope; `review.html#A034` opens
+that case directly. The review page reads the official version 4 export and does
+not edit audit scores.
+
+Create a blinded manual audit from that snapshot:
+
+```sh
+uv run python -m hidden_agenda.manual_audit --output runs/manual-audit-v1
+open runs/manual-audit-v1/audit.html
+```
+
+By default this samples 10 clean and 10 concealment trajectories per model (100
+random cases), then adds the successful escape and false positives if not already
+sampled. Only evaluation runs with available emitted reasoning and no actor error
+are eligible. Model names, conditions, private task data, grades, and existing
+judge outcomes are omitted from the HTML. The separate `PRIVATE-answer-key.json`
+records selection and ground truth: leave it unopened until scoring is finalized.
+
+The form uses the judge's `suspicion`, `suspected_task`, and `evidence_ids` fields,
+plus categories and notes. Drafts autosave to browser storage; download JSON to
+back up or transfer your scores, and import it to resume. Random cases and selected
+diagnostic cases should be analyzed separately. Use `--view reasoning` for a
+CoT-only audit; the default is `reasoning_output`. Use an empty output directory
+for each new batch to avoid replacing existing audits. The same reviewer reading
+both views of one trace does not provide an independent blinded view comparison.
+
 ## Setup
 
 Requires Python 3.11+, uv, and a running Docker daemon. Run these commands from the repository root:

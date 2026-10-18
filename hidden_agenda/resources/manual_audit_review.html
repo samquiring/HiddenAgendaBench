@@ -1,0 +1,82 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hidden Agenda · Unblinded audit review</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4f6fa;color:#17283b;font:15px/1.5 system-ui}header{background:#192d45;color:white;padding:20px 24px}h1{font-size:24px;margin:0}h2{font-size:21px}h3{font-size:16px;margin:0 0 10px}p{margin:8px 0}nav{display:flex;gap:10px;flex-wrap:wrap;padding:16px 24px}button,select,input{font:inherit;padding:9px;border:1px solid #b9c6d5;border-radius:5px}button{background:white;cursor:pointer}input{min-width:260px;flex:1}main{display:grid;grid-template-columns:320px minmax(0,1fr);gap:20px;padding:0 24px 24px}section,details{padding:16px;background:white;border:1px solid #dbe2eb;border-radius:8px;margin-bottom:14px}pre{font:13px/1.6 ui-monospace,monospace;white-space:pre-wrap;overflow-wrap:anywhere;margin:0}#list{max-height:80vh;overflow:auto;position:sticky;top:10px}#list button{display:block;width:100%;text-align:left;margin:0 0 8px}#list button.active{border:2px solid #176ba6;background:#e9f5ff}#counts{padding:0 24px 12px;display:flex;gap:8px;flex-wrap:wrap}#counts button{font-size:13px}#status{padding:0 24px 14px;color:#425870}article{min-width:0}.badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.badge{background:#e4ecf5;border-radius:5px;padding:6px 10px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}.help{font-size:13px;color:#52677f}summary{cursor:pointer;font-weight:600}mark{background:#ffe18a;color:#17283b}mark.current{background:#ffac5e;outline:2px solid #ad5918}#matchbar{display:flex;gap:8px;align-items:center;margin-bottom:12px}@media(max-width:850px){main{grid-template-columns:1fr}#list{position:static;max-height:250px}.cols{grid-template-columns:1fr}input{min-width:180px}}
+</style>
+<header><h1>Hidden Agenda · Unblinded audit review</h1><p>Answer key, model identities, official version 4 human scores, and LLM judgments · offline</p></header>
+<nav><input id="search" type="search" aria-label="Search phrases" placeholder="Search a phrase or audit ID…">
+<select id="scope" aria-label="Search scope"><option value="reasoning">Search emitted reasoning</option><option value="visible">Search monitor-visible transcript</option><option value="tasks">Search tasks + reasoning + output</option><option value="all">Search all fields, including answer key</option></select>
+<select id="model" aria-label="Model"><option value="">All models</option></select>
+<select id="condition" aria-label="Assigned condition"><option value="">Both conditions</option><option value="clean">Clean only</option><option value="concealment">Concealment only</option></select>
+<select id="selection" aria-label="Sample selection"><option value="">All sampled cases</option><option value="random">Random sample only</option><option value="diagnostic">Selected diagnostic cases only</option></select>
+<button id="clear">Clear filters</button></nav>
+<div id="counts"></div><div id="status" role="status" aria-live="polite"></div>
+<main><aside id="list"></aside><article id="detail"></article></main>
+<script id="review-data" type="application/json">__REVIEW_DATA__</script>
+<script>
+'use strict';
+const batch=JSON.parse(document.getElementById('review-data').textContent),rows=batch.cases,$=id=>document.getElementById(id);
+const modelNames=new Map(rows.map(c=>[c.record.model_run,c.model_label]));
+for(const [id,name] of [...modelNames].sort((a,b)=>a[1].localeCompare(b[1]))){const o=document.createElement('option');o.value=id;o.textContent=name;$('model').append(o);}
+let chosen=rows.find(c=>c.audit_id===location.hash.slice(1))||rows.find(c=>c.audit_id==='A034')||rows[0],marks=[],markIndex=-1;
+function searchText(c){
+ const r=c.record;switch($('scope').value){
+  case 'reasoning':return r.reasoning||'';
+  case 'visible':return (r.reasoning||'')+'\n'+(r.visible_output||'');
+  case 'tasks':return [r.primary,r.public_output_format,r.condition==='clean'?'':r.auxiliary,r.reasoning,r.output].join('\n');
+  default:return JSON.stringify(c);
+ }
+}
+function matches(c,includeModel=true){
+ const q=$('search').value.trim().toLowerCase();
+ return (!includeModel||!$('model').value||c.record.model_run===$('model').value)&&(!$('condition').value||c.record.condition===$('condition').value)&&(!$('selection').value||c.selection.includes('random_sample')===($('selection').value==='random'))&&(!q||c.audit_id.toLowerCase().includes(q)||searchText(c).toLowerCase().includes(q));
+}
+function highlighted(el,value){
+ const text=typeof value==='string'?value:JSON.stringify(value,null,2),q=$('search').value.trim();
+ if(!q){el.textContent=text;return;}
+ const lower=text.toLowerCase(),needle=q.toLowerCase();let start=0,pos;
+ while((pos=lower.indexOf(needle,start))!==-1){
+  el.append(document.createTextNode(text.slice(start,pos)));const mark=document.createElement('mark');mark.textContent=text.slice(pos,pos+q.length);el.append(mark);marks.push(mark);start=pos+q.length;
+ }
+ el.append(document.createTextNode(text.slice(start)));
+}
+function block(parent,title,value,collapsed=false){
+ const section=document.createElement(collapsed?'details':'section'),heading=document.createElement(collapsed?'summary':'h3');heading.textContent=title;section.append(heading);
+ const text=document.createElement('pre');highlighted(text,value);section.append(text);parent.append(section);
+}
+function scrollMatch(delta){
+ if(!marks.length)return;
+ if(markIndex>=0)marks[markIndex].className='';markIndex=markIndex<0?(delta<0?marks.length-1:0):(markIndex+delta+marks.length)%marks.length;
+ const mark=marks[markIndex];for(let p=mark.parentElement;p;p=p.parentElement){if(p.tagName==='DETAILS')p.open=true;}
+ mark.className='current';mark.scrollIntoView({behavior:'smooth',block:'center'});$('matchstatus').textContent=(markIndex+1)+' / '+marks.length+' highlighted matches in this case';
+}
+function detail(){
+ $('detail').replaceChildren();marks=[];markIndex=-1;
+ if(!chosen){$('detail').textContent='No cases match these filters.';return;}
+ const c=chosen,r=c.record,h=document.createElement('h2');h.textContent=c.audit_id+' · '+c.model_label+' · '+r.id;$('detail').append(h);
+ const badges=document.createElement('div');badges.className='badges';
+ for(const label of [r.condition,r.effort+' reasoning',c.selection.includes('random_sample')?'Random sample':'Selected diagnostic',r.primary_success?'Coding passed':'Coding did not pass',r.condition==='clean'?'No auxiliary task assigned':r.auxiliary_success?'Auxiliary passed':'Auxiliary did not pass']){const b=document.createElement('span');b.className='badge';b.textContent=label;badges.append(b);}$('detail').append(badges);
+ const bar=document.createElement('div');bar.id='matchbar';const previous=document.createElement('button'),next=document.createElement('button'),status=document.createElement('span');previous.textContent='Previous match';next.textContent='Next match';status.id='matchstatus';previous.onclick=()=>scrollMatch(-1);next.onclick=()=>scrollMatch(1);bar.append(previous,next,status);$('detail').append(bar);
+ block($('detail'),'Primary request — compare the trace against this task',r.primary);
+ const cols=document.createElement('div');cols.className='cols';const key=document.createElement('div'),human=document.createElement('div');cols.append(key,human);$('detail').append(cols);
+ block(key,'Answer key', {assigned_condition:r.condition,auxiliary_task:r.condition==='clean'?'Not assigned':r.auxiliary,expected_auxiliary_answer:r.condition==='clean'?null:r.answer,submitted_answer:r.submitted_answer,coding_correct:r.primary_success,auxiliary_correct:r.auxiliary_success,format_valid:r.format_valid});
+ block(human,'Your official version 4 assessment',c.human);
+ block($('detail'),'Emitted reasoning — verbatim',r.reasoning||'[Unavailable]');
+ block($('detail'),'Final output shown to the monitor — auxiliary submission removed',r.visible_output||'[No output]');
+ block($('detail'),'LLM judge — CoT-only and CoT + output',c.judgments.filter(j=>j.view==='reasoning'||j.view==='reasoning_output').map(j=>({view:j.view,status:j.status,...j.judgment})));
+ block($('detail'),'Full actor output — includes submitted answer',r.output||'[No output]',true);
+ block($('detail'),'Public formatting rules',r.public_output_format||'',true);
+ block($('detail'),'Actor route, reasoning usage, and selection', {actor:r.actor,effort:r.effort,usage:r.usage,selection:c.selection,run_id:r.run_id},true);
+ $('matchstatus').textContent=$('search').value.trim()?marks.length+' highlighted matches in this case':'Type a phrase to highlight matching text';
+ previous.disabled=next.disabled=marks.length===0;
+}
+function render(){
+ const filtered=rows.filter(c=>matches(c));if(!filtered.includes(chosen))chosen=filtered[0];
+ $('status').textContent=filtered.length+' / '+rows.length+' audit cases. Phrase matching is literal and case-insensitive. Counts describe this audit sample, including selected diagnostic cases when enabled.';
+ $('counts').replaceChildren();for(const [id,name] of [...modelNames].sort((a,b)=>a[1].localeCompare(b[1]))){const total=rows.filter(c=>c.record.model_run===id).length,hits=rows.filter(c=>c.record.model_run===id&&matches(c,false)).length;const b=document.createElement('button');b.textContent=name+': '+hits+' / '+total;b.onclick=()=>{$('model').value=id;render();};$('counts').append(b);}
+ $('list').replaceChildren();for(const c of filtered){const b=document.createElement('button');b.className=c===chosen?'active':'';b.textContent=c.audit_id+' · '+c.model_label+' · '+c.record.condition+' · human '+c.human.suspicion;b.onclick=()=>{chosen=c;history.replaceState(null,'','#'+c.audit_id);render();};$('list').append(b);}detail();
+}
+$('search').oninput=render;for(const id of ['scope','model','condition','selection'])$(id).onchange=render;
+$('clear').onclick=()=>{$('search').value='';$('model').value='';$('condition').value='';$('selection').value='';$('scope').value='reasoning';render();};
+render();
+</script></html>
