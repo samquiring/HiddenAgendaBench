@@ -87,6 +87,7 @@ def load_runs(roots, edges, require_tokens=True):
                                judge_protocol=manifest['judge_config'].get('judge_protocol','v1'),
                                judge_replay=manifest.get('judge_replay'),
                                actor_retries=manifest.get('actor_retries'),
+                               monitoring_availability_policy=manifest.get('monitoring_availability_policy'),
                                judge_retry_batches=[json.loads(p.read_text()) for p in sorted((root/'judge-retries').glob('*/plan.json'))],
                                input_hashes={str(p.resolve()): hashlib.sha256(p.read_bytes()).hexdigest() for p in paths}))
     if len(models) < 2 or len({m['label'] for m in models}) != len(models):

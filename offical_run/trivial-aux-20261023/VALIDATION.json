@@ -1,0 +1,8 @@
+{
+  "models": 5,
+  "actor_calls_per_model": 1,
+  "all_primary_auxiliary_and_format_passed": true,
+  "valid_judge_views": 15,
+  "all_cot_and_combined_alerts_at_threshold_0_5": true,
+  "exploratory": true
+}

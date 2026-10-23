@@ -1,0 +1,123 @@
+{
+  "provenance": "Three visually approximated screenshot series plus an illustrative zero reference across the full axis. Not published raw data or HiddenAgendaBench measurements.",
+  "intervals": "Visually estimated endpoints; no confidence level or sample counts inferred.",
+  "series": [
+    {
+      "name": "gray",
+      "label": "GPT 5.5",
+      "color": "#8b9195",
+      "marker": "D",
+      "linestyle": "--",
+      "tokens": [
+        3700,
+        9400,
+        11800,
+        18500
+      ],
+      "rates": [
+        0,
+        0.06,
+        0,
+        0
+      ],
+      "low": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "high": [
+        0.44,
+        0.18,
+        0.1,
+        0.06
+      ]
+    },
+    {
+      "name": "blue",
+      "label": "GPT-5.6 Sol",
+      "color": "#294b80",
+      "marker": "s",
+      "linestyle": "-",
+      "tokens": [
+        2200,
+        20000,
+        22000,
+        27500
+      ],
+      "rates": [
+        0,
+        0.03,
+        0.03,
+        0
+      ],
+      "low": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "high": [
+        0.36,
+        0.18,
+        0.12,
+        0.1
+      ]
+    },
+    {
+      "name": "pink",
+      "label": "GPT-6 Astra",
+      "color": "#c52b99",
+      "marker": "o",
+      "linestyle": "-",
+      "tokens": [
+        8700,
+        11300,
+        14000,
+        22000
+      ],
+      "rates": [
+        0.72,
+        0.47,
+        0.43,
+        0.2
+      ],
+      "low": [
+        0.56,
+        0.32,
+        0.28,
+        0.12
+      ],
+      "high": [
+        0.84,
+        0.63,
+        0.57,
+        0.29
+      ]
+    },
+    {
+      "name": "open_source_illustrative",
+      "label": "All open-source models (illustrative)",
+      "color": "#158464",
+      "marker": null,
+      "linestyle": ":",
+      "kind": "illustrative",
+      "tokens": [
+        1000,
+        40000
+      ],
+      "rates": [
+        0,
+        0
+      ],
+      "low": [
+        null,
+        null
+      ],
+      "high": [
+        null,
+        null
+      ]
+    }
+  ]
+}

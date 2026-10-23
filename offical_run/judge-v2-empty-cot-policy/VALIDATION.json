@@ -1,0 +1,13 @@
+{
+  "trajectories": 1150,
+  "judgments": 3450,
+  "changed_actor_responses": 1,
+  "all_evaluation_calls_resolved": true,
+  "all_evaluation_monitor_outcomes_available": true,
+  "decision_sources": {
+    "llm": 3402,
+    "automatic_no_emitted_reasoning": 24,
+    "reused_output_only_judgment": 24
+  },
+  "original_snapshot_preserved": true
+}

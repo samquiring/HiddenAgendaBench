@@ -1,0 +1,22 @@
+Running 1 tasks...
+---------------------------------------------------------                       
+task (1 sample): hf-inference-providers/Qwen/Qwen3.8-2.4T-A95B:deepinfra        
+max_retries: 0, timeout: 600, max_connections: 1, max_tokens: 32768,            
+reasoning_effort: xhigh, time_limit: 900, dataset: (samples)                    
+---------------------------------------------------------                       
+                                                                                
+generate     | Steps:   1/1 100% | Samples:   0/  1 | hf-inference-providers:  0/ 1 | HTTP retries: 0
+
+---------------------------------------------------------                       
+task (1 sample): hf-inference-providers/Qwen/Qwen3.8-2.4T-A95B:deepinfra        
+max_retries: 0, timeout: 600, max_connections: 1, max_tokens: 32768,            
+reasoning_effort: xhigh, time_limit: 900, dataset: (samples)                    
+                                                                                
+total time:                               0:00:10                               
+hf-inference-providers/Qwen/Qwen3.8-2.4…  1,261 tokens [I: 273, CW: 0, CR: 0, O:
+                                        988, R: 874]                            
+                                                                                
+Log:                                                                            
+runs/trivial-aux-20261023/qwen/actors/2026-10-23T05-24-58-00-00_task_Kuv7Q7VZD9…
+---------------------------------------------------------                       
+                                                                                

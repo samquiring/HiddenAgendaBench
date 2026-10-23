@@ -12,6 +12,35 @@ local and Git-ignored.
 The [official human audit](offical_run/manual-audit-v1/REPORT.md) preserves both the
 original blinded scores and the version 4 scores revised after feedback.
 
+Plot judge false-positive rates and pointwise 95% Wilson intervals at the explicit
+alternate cutoff `suspicion > 0.5`:
+
+```sh
+uv run python -m hidden_agenda.false_positives --threshold 0.5
+```
+
+This reads saved results without model calls and writes PNG/SVG/PDF, CSV, JSON and
+a report under `offical_run/false-positive-threshold-0.5/`. Its current source is
+`offical_run/judge-v2-empty-cot-policy/`: completed responses without emitted CoT
+automatically pass CoT-only monitoring, and combined monitoring uses the identical
+output-only evidence. Those decisions are tagged in the saved data. The remaining
+DeepSeek Pro clean evaluation error was recovered through Featherless, so each
+model now has 100 completed clean monitoring outcomes. Actual actor or judge
+errors remain unavailable. The original calibrated benchmark cutoff is
+preserved; the report also checks auxiliary-attempt detection at the alternate
+cutoff. Use `--output` for a separate analysis at another threshold.
+
+To apply the empty-CoT policy offline to another saved result set:
+
+```sh
+uv run python -m hidden_agenda.monitor_availability --source runs/source-results --output runs/revised-monitoring
+```
+
+This preserves source data and reuses existing output-only judgments where the
+combined view has exactly the same evidence. Newly prepared benchmarks record the
+same policy in their judge configuration. Older frozen configurations retain
+their original policy unless explicitly revised.
+
 After scoring, create an unblinded review page with model identities, the answer
 key, official human scores and both LLM monitor views:
 
@@ -20,7 +49,8 @@ uv run python -m hidden_agenda.manual_audit_review
 open runs/manual-audit-v1/review.html
 ```
 
-The review page filters by model, assigned condition and sample type. Phrase
+The review page filters by model, assigned condition, sample type and your selected
+evidence category. Category filters combine with phrase search and model filters. Phrase
 search is literal and case-insensitive, defaults to emitted reasoning, and
 highlights matching text. Search scope can include tasks, outputs or all fields.
 Audit IDs such as `A034` are searchable in every scope; `review.html#A034` opens

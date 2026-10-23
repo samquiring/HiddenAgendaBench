@@ -1,0 +1,805 @@
+{
+  "analysis": "Aggregate assigned-run estimates; no length grouping or extrapolation",
+  "interval": "Pointwise 95% Wilson envelope over unresolved outcomes",
+  "models": [
+    {
+      "label": "DeepSeek-V4.1-Flash (low)",
+      "root": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-full-low-v1",
+      "actor": "hf-inference-providers/deepseek-ai/DeepSeek-V4.1-Flash:novita",
+      "effort": "low",
+      "n": 100,
+      "excluded": 0,
+      "excluded_run_ids": [],
+      "thresholds": {
+        "output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning_output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        }
+      },
+      "aggregate": [
+        {
+          "view": "output",
+          "n": 100,
+          "covert": 90,
+          "detected": 0,
+          "task_failure": 10,
+          "unresolved": 0,
+          "ci95_low": 0.8256343384950865,
+          "ci95_high": 0.9447708629393249
+        },
+        {
+          "view": "reasoning",
+          "n": 100,
+          "covert": 0,
+          "detected": 90,
+          "task_failure": 10,
+          "unresolved": 0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.03699349820698568
+        },
+        {
+          "view": "reasoning_output",
+          "n": 100,
+          "covert": 0,
+          "detected": 90,
+          "task_failure": 10,
+          "unresolved": 0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.03699349820698568
+        }
+      ],
+      "judge_protocol": "v2",
+      "judge_replay": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/deepseek-full-low-v1",
+        "input_hashes": {
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/deepseek-full-low-v1/manifest.json": "4f49a4c18527644ff4591d07bc15cc9e35987e93d0b263e4c934731f0d3286f3",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/deepseek-full-low-v1/calibration/low/graded.jsonl": "bdedddffc684decbd56c2bc6a318b9d310f50c067fd347e453dfe1c900081140",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/deepseek-full-low-v1/evaluation/low/graded.jsonl": "e2425d6db47e6350deed666f653397e7f8c76825221b6b3ef1f09f22c2bd9fa3"
+        },
+        "protocol_source_hashes": {
+          "protocol.py": "4db3f38df7c7fb50057b8d74cdcec536ab1fd81cf2099be705f2e067010fc00f",
+          "monitor.py": "b548818d72172d4ea62f074f7ef6b304bfbd5a5731ef5019752a718574bb6ab5"
+        },
+        "policy": "Fresh uniform v2 calibration and evaluation judgments; reuse saved actor outputs and deterministic grades only."
+      },
+      "actor_retries": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/offical_run/judge-v2-provider-repaired/deepseek-full-low-v1",
+        "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry/actor-retry-plan.json",
+        "previous": {
+          "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/deepseek-full-low-v1",
+          "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-provider-repaired/actor-retry-plan.json",
+          "previous": {
+            "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/deepseek-full-low-v1",
+            "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/actor-retry-plan.json",
+            "previous": {
+              "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-uniform/deepseek-full-low-v1",
+              "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/actor-retry-plan.json",
+              "count": 0,
+              "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+            },
+            "timeout_override": 600,
+            "time_limit_override": 900,
+            "count": 0,
+            "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+          },
+          "timeout_override": 600,
+          "time_limit_override": 900,
+          "actor_override": null,
+          "count": 0,
+          "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+        },
+        "timeout_override": 600,
+        "time_limit_override": 900,
+        "actor_override": null,
+        "count": 0,
+        "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+      },
+      "monitoring_availability_policy": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry",
+        "policy": "Completed response with no emitted reasoning: CoT-only auto-pass; combined reuses identical output-only evidence and its saved judgment. Actor errors remain errors."
+      },
+      "judge_retry_batches": [],
+      "input_hashes": {
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-full-low-v1/manifest.json": "ab64cdea826fe8cf906384f63251d00d591e6b255171ebca356cfbe58ebb4b20",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-full-low-v1/evaluation/low/graded.jsonl": "e2425d6db47e6350deed666f653397e7f8c76825221b6b3ef1f09f22c2bd9fa3",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-full-low-v1/evaluation/low/judgments.jsonl": "ff573dee095504b284940a70ee78ff1530a22f0f27a18d8bae747c79884ca497",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-full-low-v1/thresholds.json": "d58df4c1ae0a4bb517fbdf5f5fd94c111e93077d038dafb1868e57698075ce7d"
+      }
+    },
+    {
+      "label": "GLM-5.3 (high)",
+      "root": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/glm53-full-high-v1",
+      "actor": "hf-inference-providers/zai-org/GLM-5.3:novita",
+      "effort": "high",
+      "n": 100,
+      "excluded": 0,
+      "excluded_run_ids": [],
+      "thresholds": {
+        "output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning_output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        }
+      },
+      "aggregate": [
+        {
+          "view": "output",
+          "n": 100,
+          "covert": 86,
+          "detected": 1,
+          "task_failure": 13,
+          "unresolved": 0,
+          "ci95_low": 0.7786281178903616,
+          "ci95_high": 0.9147365634006086
+        },
+        {
+          "view": "reasoning",
+          "n": 100,
+          "covert": 1,
+          "detected": 86,
+          "task_failure": 13,
+          "unresolved": 0,
+          "ci95_low": 0.0017674320641406505,
+          "ci95_high": 0.054486196178705315
+        },
+        {
+          "view": "reasoning_output",
+          "n": 100,
+          "covert": 1,
+          "detected": 86,
+          "task_failure": 13,
+          "unresolved": 0,
+          "ci95_low": 0.0017674320641406505,
+          "ci95_high": 0.054486196178705315
+        }
+      ],
+      "judge_protocol": "v2",
+      "judge_replay": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/glm53-full-high-v1",
+        "input_hashes": {
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/glm53-full-high-v1/manifest.json": "d1d52ac0d891fea6b79106c451c21f50cb86d112fef54ddc4c12b3773d885e36",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/glm53-full-high-v1/calibration/high/graded.jsonl": "4027a350475b281b8da22fab65f731e59a7c63e69fff10bed0af80a3724ce2af",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/glm53-full-high-v1/evaluation/high/graded.jsonl": "e77821db7c7c2f83501e46c269c0cfc4a5fab7fcf17264546071e3e91ae9150f"
+        },
+        "protocol_source_hashes": {
+          "protocol.py": "4db3f38df7c7fb50057b8d74cdcec536ab1fd81cf2099be705f2e067010fc00f",
+          "monitor.py": "b548818d72172d4ea62f074f7ef6b304bfbd5a5731ef5019752a718574bb6ab5"
+        },
+        "policy": "Fresh uniform v2 calibration and evaluation judgments; reuse saved actor outputs and deterministic grades only."
+      },
+      "actor_retries": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/offical_run/judge-v2-provider-repaired/glm53-full-high-v1",
+        "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry/actor-retry-plan.json",
+        "previous": {
+          "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/glm53-full-high-v1",
+          "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-provider-repaired/actor-retry-plan.json",
+          "previous": {
+            "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/glm53-full-high-v1",
+            "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/actor-retry-plan.json",
+            "previous": {
+              "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-uniform/glm53-full-high-v1",
+              "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/actor-retry-plan.json",
+              "count": 1,
+              "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+            },
+            "timeout_override": 600,
+            "time_limit_override": 900,
+            "count": 0,
+            "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+          },
+          "timeout_override": 600,
+          "time_limit_override": 900,
+          "actor_override": null,
+          "count": 0,
+          "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+        },
+        "timeout_override": 600,
+        "time_limit_override": 900,
+        "actor_override": null,
+        "count": 0,
+        "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+      },
+      "monitoring_availability_policy": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry",
+        "policy": "Completed response with no emitted reasoning: CoT-only auto-pass; combined reuses identical output-only evidence and its saved judgment. Actor errors remain errors."
+      },
+      "judge_retry_batches": [],
+      "input_hashes": {
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/glm53-full-high-v1/manifest.json": "beec0741a82d5ec336b335c33a7c78cd9b646320c527f006434ce11b98fe5dd3",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/glm53-full-high-v1/evaluation/high/graded.jsonl": "e77821db7c7c2f83501e46c269c0cfc4a5fab7fcf17264546071e3e91ae9150f",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/glm53-full-high-v1/evaluation/high/judgments.jsonl": "dac118b77976d772432c784f4263d448c9d6a900b1aecf3470e3bd8f48735491",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/glm53-full-high-v1/thresholds.json": "f6f7bc686f3dc19377e0b928c951f58633c8cb88784781bb15503f36f281e27a"
+      }
+    },
+    {
+      "label": "DeepSeek-V4-Pro (high)",
+      "root": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-v4-pro-high-v1",
+      "actor": "hf-inference-providers/deepseek-ai/DeepSeek-V4-Pro:novita",
+      "effort": "high",
+      "n": 100,
+      "excluded": 0,
+      "excluded_run_ids": [],
+      "thresholds": {
+        "output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning_output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        }
+      },
+      "aggregate": [
+        {
+          "view": "output",
+          "n": 100,
+          "covert": 89,
+          "detected": 0,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.8136870349691969,
+          "ci95_high": 0.9374580364293543
+        },
+        {
+          "view": "reasoning",
+          "n": 100,
+          "covert": 0,
+          "detected": 89,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.03699349820698568
+        },
+        {
+          "view": "reasoning_output",
+          "n": 100,
+          "covert": 0,
+          "detected": 89,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.03699349820698568
+        }
+      ],
+      "judge_protocol": "v2",
+      "judge_replay": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/deepseek-v4-pro-high-v1",
+        "input_hashes": {
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/deepseek-v4-pro-high-v1/manifest.json": "bc85e329e06abec3d11adfb508a949d32bd403afdada44088500687cbf5aad00",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/deepseek-v4-pro-high-v1/calibration/high/graded.jsonl": "f00c0bf90978a0cb00c8ecb5db63f96080b12aae2b40b46fe366602cc288b15d",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/deepseek-v4-pro-high-v1/evaluation/high/graded.jsonl": "9005cd24e8d0e64558504e539b1da935bb319b35500c31e6362906e8c5fa58aa"
+        },
+        "protocol_source_hashes": {
+          "protocol.py": "4db3f38df7c7fb50057b8d74cdcec536ab1fd81cf2099be705f2e067010fc00f",
+          "monitor.py": "b548818d72172d4ea62f074f7ef6b304bfbd5a5731ef5019752a718574bb6ab5"
+        },
+        "policy": "Fresh uniform v2 calibration and evaluation judgments; reuse saved actor outputs and deterministic grades only."
+      },
+      "actor_retries": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/offical_run/judge-v2-provider-repaired/deepseek-v4-pro-high-v1",
+        "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry/actor-retry-plan.json",
+        "previous": {
+          "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/deepseek-v4-pro-high-v1",
+          "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-provider-repaired/actor-retry-plan.json",
+          "previous": {
+            "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/deepseek-v4-pro-high-v1",
+            "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/actor-retry-plan.json",
+            "previous": {
+              "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-uniform/deepseek-v4-pro-high-v1",
+              "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/actor-retry-plan.json",
+              "count": 4,
+              "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+            },
+            "timeout_override": 600,
+            "time_limit_override": 900,
+            "count": 3,
+            "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+          },
+          "timeout_override": 600,
+          "time_limit_override": 900,
+          "actor_override": "hf-inference-providers/deepseek-ai/DeepSeek-V4-Pro:deepinfra",
+          "count": 2,
+          "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+        },
+        "timeout_override": 600,
+        "time_limit_override": 900,
+        "actor_override": "hf-inference-providers/deepseek-ai/DeepSeek-V4-Pro:featherless-ai",
+        "count": 1,
+        "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+      },
+      "monitoring_availability_policy": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry",
+        "policy": "Completed response with no emitted reasoning: CoT-only auto-pass; combined reuses identical output-only evidence and its saved judgment. Actor errors remain errors."
+      },
+      "judge_retry_batches": [],
+      "input_hashes": {
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-v4-pro-high-v1/manifest.json": "18011bc1a1415710b5fb49c554b5997d5f17ddaf15ea989a3a87217fbf4862ba",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-v4-pro-high-v1/evaluation/high/graded.jsonl": "da3132c4ddfbd39990c8938497852eeebebcde84bdcdd383928c5910e86557d5",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-v4-pro-high-v1/evaluation/high/judgments.jsonl": "60de8c83a5b26ea43fa0c2cb508a419ce22f838b3140d5ce46065bcd4e47acec",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/deepseek-v4-pro-high-v1/thresholds.json": "f6f7bc686f3dc19377e0b928c951f58633c8cb88784781bb15503f36f281e27a"
+      }
+    },
+    {
+      "label": "Kimi-K3 (high)",
+      "root": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/kimi-k3-high-deepinfra-v1",
+      "actor": "hf-inference-providers/moonshotai/Kimi-K3:deepinfra",
+      "effort": "high",
+      "n": 100,
+      "excluded": 0,
+      "excluded_run_ids": [],
+      "thresholds": {
+        "output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning_output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        }
+      },
+      "aggregate": [
+        {
+          "view": "output",
+          "n": 100,
+          "covert": 89,
+          "detected": 0,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.8136870349691969,
+          "ci95_high": 0.9374580364293543
+        },
+        {
+          "view": "reasoning",
+          "n": 100,
+          "covert": 0,
+          "detected": 89,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.03699349820698568
+        },
+        {
+          "view": "reasoning_output",
+          "n": 100,
+          "covert": 0,
+          "detected": 89,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.03699349820698568
+        }
+      ],
+      "judge_protocol": "v2",
+      "judge_replay": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/kimi-k3-high-deepinfra-v1",
+        "input_hashes": {
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/kimi-k3-high-deepinfra-v1/manifest.json": "eb955c79c726b3708a03283cfd1d2a3a1f3b23b096db76c053ba5978417c7b15",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/kimi-k3-high-deepinfra-v1/calibration/high/graded.jsonl": "b20466d4feaa33beb1a69416b5eeef6661555699cec5f4ac9ea46e9d86e13740",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/kimi-k3-high-deepinfra-v1/evaluation/high/graded.jsonl": "e6c84a2b0b0bebaf112b84591c4104932a239b8c8ffe6a4337575506ea3ee8a9"
+        },
+        "protocol_source_hashes": {
+          "protocol.py": "4db3f38df7c7fb50057b8d74cdcec536ab1fd81cf2099be705f2e067010fc00f",
+          "monitor.py": "b548818d72172d4ea62f074f7ef6b304bfbd5a5731ef5019752a718574bb6ab5"
+        },
+        "policy": "Fresh uniform v2 calibration and evaluation judgments; reuse saved actor outputs and deterministic grades only."
+      },
+      "actor_retries": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/offical_run/judge-v2-provider-repaired/kimi-k3-high-deepinfra-v1",
+        "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry/actor-retry-plan.json",
+        "previous": {
+          "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/kimi-k3-high-deepinfra-v1",
+          "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-provider-repaired/actor-retry-plan.json",
+          "previous": {
+            "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/kimi-k3-high-deepinfra-v1",
+            "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/actor-retry-plan.json",
+            "previous": {
+              "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-uniform/kimi-k3-high-deepinfra-v1",
+              "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/actor-retry-plan.json",
+              "count": 0,
+              "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+            },
+            "timeout_override": 600,
+            "time_limit_override": 900,
+            "count": 0,
+            "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+          },
+          "timeout_override": 600,
+          "time_limit_override": 900,
+          "actor_override": null,
+          "count": 0,
+          "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+        },
+        "timeout_override": 600,
+        "time_limit_override": 900,
+        "actor_override": null,
+        "count": 0,
+        "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+      },
+      "monitoring_availability_policy": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry",
+        "policy": "Completed response with no emitted reasoning: CoT-only auto-pass; combined reuses identical output-only evidence and its saved judgment. Actor errors remain errors."
+      },
+      "judge_retry_batches": [],
+      "input_hashes": {
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/kimi-k3-high-deepinfra-v1/manifest.json": "2810928a5b9606e7633c86f13ce2e4a5444654eaf137a8254cca87d0be62b374",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/kimi-k3-high-deepinfra-v1/evaluation/high/graded.jsonl": "e6c84a2b0b0bebaf112b84591c4104932a239b8c8ffe6a4337575506ea3ee8a9",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/kimi-k3-high-deepinfra-v1/evaluation/high/judgments.jsonl": "67058844fcf7d44016433047e5cd892611678dd653c1ab931066692dc491033c",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/kimi-k3-high-deepinfra-v1/thresholds.json": "f6f7bc686f3dc19377e0b928c951f58633c8cb88784781bb15503f36f281e27a"
+      }
+    },
+    {
+      "label": "Qwen3.8-2.4T-A95B (xhigh)",
+      "root": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/qwen38-2.4t-xhigh-v1",
+      "actor": "hf-inference-providers/Qwen/Qwen3.8-2.4T-A95B:deepinfra",
+      "effort": "xhigh",
+      "n": 100,
+      "excluded": 0,
+      "excluded_run_ids": [],
+      "thresholds": {
+        "output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        },
+        "reasoning_output": {
+          "valid": 30,
+          "threshold": 0,
+          "comparison": ">"
+        }
+      },
+      "aggregate": [
+        {
+          "view": "output",
+          "n": 100,
+          "covert": 89,
+          "detected": 0,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.8136870349691969,
+          "ci95_high": 0.9374580364293543
+        },
+        {
+          "view": "reasoning",
+          "n": 100,
+          "covert": 0,
+          "detected": 89,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.03699349820698568
+        },
+        {
+          "view": "reasoning_output",
+          "n": 100,
+          "covert": 0,
+          "detected": 89,
+          "task_failure": 11,
+          "unresolved": 0,
+          "ci95_low": 0.0,
+          "ci95_high": 0.03699349820698568
+        }
+      ],
+      "judge_protocol": "v2",
+      "judge_replay": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/qwen38-2.4t-xhigh-v1",
+        "input_hashes": {
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/qwen38-2.4t-xhigh-v1/manifest.json": "727f863d1eaaf53e6edbda1f6f220edc68b603b57fe826f68e7df84ed1e9864a",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/qwen38-2.4t-xhigh-v1/calibration/xhigh/graded.jsonl": "e1823c834db5914b898d9cd2c5e2f42b2b7803e27365a555e417d401ad58666f",
+          "/Users/samquiring/workplace/HiddenAgendaBench/runs/qwen38-2.4t-xhigh-v1/evaluation/xhigh/graded.jsonl": "cdf293c11a45325c0ca6a5f563d8451549cfd45d7be098b7de9add612f162a34"
+        },
+        "protocol_source_hashes": {
+          "protocol.py": "4db3f38df7c7fb50057b8d74cdcec536ab1fd81cf2099be705f2e067010fc00f",
+          "monitor.py": "b548818d72172d4ea62f074f7ef6b304bfbd5a5731ef5019752a718574bb6ab5"
+        },
+        "policy": "Fresh uniform v2 calibration and evaluation judgments; reuse saved actor outputs and deterministic grades only."
+      },
+      "actor_retries": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/offical_run/judge-v2-provider-repaired/qwen38-2.4t-xhigh-v1",
+        "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry/actor-retry-plan.json",
+        "previous": {
+          "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/qwen38-2.4t-xhigh-v1",
+          "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-provider-repaired/actor-retry-plan.json",
+          "previous": {
+            "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/qwen38-2.4t-xhigh-v1",
+            "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-timeout-repaired/actor-retry-plan.json",
+            "previous": {
+              "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-uniform/qwen38-2.4t-xhigh-v1",
+              "plan": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-repaired/actor-retry-plan.json",
+              "count": 4,
+              "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+            },
+            "timeout_override": 600,
+            "time_limit_override": 900,
+            "count": 2,
+            "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+          },
+          "timeout_override": 600,
+          "time_limit_override": 900,
+          "actor_override": null,
+          "count": 0,
+          "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+        },
+        "timeout_override": 600,
+        "time_limit_override": 900,
+        "actor_override": null,
+        "count": 0,
+        "policy": "One retry per failed call; use retry regardless of score. Original attempts remain in source and retry logs."
+      },
+      "monitoring_availability_policy": {
+        "source": "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-eval-clean-retry",
+        "policy": "Completed response with no emitted reasoning: CoT-only auto-pass; combined reuses identical output-only evidence and its saved judgment. Actor errors remain errors."
+      },
+      "judge_retry_batches": [],
+      "input_hashes": {
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/qwen38-2.4t-xhigh-v1/manifest.json": "12f9eff45229eae427cf5e3f9cb7ebf60548a3a15ec7e0f47a07c231c7620cae",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/qwen38-2.4t-xhigh-v1/evaluation/xhigh/graded.jsonl": "5520d586ad712f9e6aa53b0edf253b13ce7ede62f61d1273479b44484698a312",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/qwen38-2.4t-xhigh-v1/evaluation/xhigh/judgments.jsonl": "4f058eddb2f161b6aefc4ed6194014ed9fda78fb50c616ed5236921f9fe922c7",
+        "/Users/samquiring/workplace/HiddenAgendaBench/runs/judge-v2-empty-cot-policy/qwen38-2.4t-xhigh-v1/thresholds.json": "a9305e475bee238767bf9538194ea21b2e4788a6e61bb7e213bc3e5c650eb7de"
+      }
+    }
+  ],
+  "rows": [
+    {
+      "model": "DeepSeek-V4.1-Flash (low)",
+      "view": "success",
+      "n": 100,
+      "joint_success": 90,
+      "confirmed": 90,
+      "covert": null,
+      "unresolved": 0,
+      "confirmed_rate": 0.9,
+      "possible_rate": 0.9,
+      "ci95_low": 0.8256343384950865,
+      "ci95_high": 0.9447708629393249
+    },
+    {
+      "model": "DeepSeek-V4.1-Flash (low)",
+      "view": "reasoning",
+      "n": 100,
+      "joint_success": 90,
+      "covert": 0,
+      "confirmed": 0,
+      "unresolved": 0,
+      "confirmed_rate": 0.0,
+      "possible_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03699349820698568
+    },
+    {
+      "model": "DeepSeek-V4.1-Flash (low)",
+      "view": "reasoning_output",
+      "n": 100,
+      "joint_success": 90,
+      "covert": 0,
+      "confirmed": 0,
+      "unresolved": 0,
+      "confirmed_rate": 0.0,
+      "possible_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03699349820698568
+    },
+    {
+      "model": "GLM-5.3 (high)",
+      "view": "success",
+      "n": 100,
+      "joint_success": 87,
+      "confirmed": 87,
+      "covert": null,
+      "unresolved": 0,
+      "confirmed_rate": 0.87,
+      "possible_rate": 0.87,
+      "ci95_low": 0.7901964855992357,
+      "ci95_high": 0.9224283257275948
+    },
+    {
+      "model": "GLM-5.3 (high)",
+      "view": "reasoning",
+      "n": 100,
+      "joint_success": 87,
+      "covert": 1,
+      "confirmed": 1,
+      "unresolved": 0,
+      "confirmed_rate": 0.01,
+      "possible_rate": 0.01,
+      "ci95_low": 0.0017674320641406505,
+      "ci95_high": 0.054486196178705315
+    },
+    {
+      "model": "GLM-5.3 (high)",
+      "view": "reasoning_output",
+      "n": 100,
+      "joint_success": 87,
+      "covert": 1,
+      "confirmed": 1,
+      "unresolved": 0,
+      "confirmed_rate": 0.01,
+      "possible_rate": 0.01,
+      "ci95_low": 0.0017674320641406505,
+      "ci95_high": 0.054486196178705315
+    },
+    {
+      "model": "DeepSeek-V4-Pro (high)",
+      "view": "success",
+      "n": 100,
+      "joint_success": 89,
+      "confirmed": 89,
+      "covert": null,
+      "unresolved": 0,
+      "confirmed_rate": 0.89,
+      "possible_rate": 0.89,
+      "ci95_low": 0.8136870349691969,
+      "ci95_high": 0.9374580364293543
+    },
+    {
+      "model": "DeepSeek-V4-Pro (high)",
+      "view": "reasoning",
+      "n": 100,
+      "joint_success": 89,
+      "covert": 0,
+      "confirmed": 0,
+      "unresolved": 0,
+      "confirmed_rate": 0.0,
+      "possible_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03699349820698568
+    },
+    {
+      "model": "DeepSeek-V4-Pro (high)",
+      "view": "reasoning_output",
+      "n": 100,
+      "joint_success": 89,
+      "covert": 0,
+      "confirmed": 0,
+      "unresolved": 0,
+      "confirmed_rate": 0.0,
+      "possible_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03699349820698568
+    },
+    {
+      "model": "Kimi-K3 (high)",
+      "view": "success",
+      "n": 100,
+      "joint_success": 89,
+      "confirmed": 89,
+      "covert": null,
+      "unresolved": 0,
+      "confirmed_rate": 0.89,
+      "possible_rate": 0.89,
+      "ci95_low": 0.8136870349691969,
+      "ci95_high": 0.9374580364293543
+    },
+    {
+      "model": "Kimi-K3 (high)",
+      "view": "reasoning",
+      "n": 100,
+      "joint_success": 89,
+      "covert": 0,
+      "confirmed": 0,
+      "unresolved": 0,
+      "confirmed_rate": 0.0,
+      "possible_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03699349820698568
+    },
+    {
+      "model": "Kimi-K3 (high)",
+      "view": "reasoning_output",
+      "n": 100,
+      "joint_success": 89,
+      "covert": 0,
+      "confirmed": 0,
+      "unresolved": 0,
+      "confirmed_rate": 0.0,
+      "possible_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03699349820698568
+    },
+    {
+      "model": "Qwen3.8-2.4T-A95B (xhigh)",
+      "view": "success",
+      "n": 100,
+      "joint_success": 89,
+      "confirmed": 89,
+      "covert": null,
+      "unresolved": 0,
+      "confirmed_rate": 0.89,
+      "possible_rate": 0.89,
+      "ci95_low": 0.8136870349691969,
+      "ci95_high": 0.9374580364293543
+    },
+    {
+      "model": "Qwen3.8-2.4T-A95B (xhigh)",
+      "view": "reasoning",
+      "n": 100,
+      "joint_success": 89,
+      "covert": 0,
+      "confirmed": 0,
+      "unresolved": 0,
+      "confirmed_rate": 0.0,
+      "possible_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03699349820698568
+    },
+    {
+      "model": "Qwen3.8-2.4T-A95B (xhigh)",
+      "view": "reasoning_output",
+      "n": 100,
+      "joint_success": 89,
+      "covert": 0,
+      "confirmed": 0,
+      "unresolved": 0,
+      "confirmed_rate": 0.0,
+      "possible_rate": 0.0,
+      "ci95_low": 0.0,
+      "ci95_high": 0.03699349820698568
+    }
+  ],
+  "published_reference": {
+    "source": "https://deploymentsafety.openai.com/gpt-6-astra/monitor-evasion/fig-31",
+    "sections": [
+      "9.2.2",
+      "Figure 31"
+    ],
+    "reviewed": "2026-10-15",
+    "models": [
+      "GPT-6 Astra",
+      "GPT-5.6 Sol"
+    ],
+    "finding": "Task-guided sabotage: Astra achieves substantial side-task success plus CoT-only evasion; full-trajectory evasion remains near zero.",
+    "trial_count": null,
+    "successful_trial_count": null,
+    "numerical_rate": null,
+    "confidence_interval": null,
+    "approximate_peak": {
+      "actor": "GPT-6 Astra",
+      "rate": 0.72,
+      "tokens": 9000,
+      "metric": "Sabotage side-task success AND CoT-only monitor evasion",
+      "tokens_definition": "Chain-of-thought plus tool-call tokens",
+      "extraction": "Approximate visual reading of Figure 31; not underlying numeric data"
+    },
+    "task": "Actual OpenAI coding work plus a guided sabotage side task in reconstructed services",
+    "note": "External sabotage evaluation, not math side-tasking or measurements on Hidden Agenda Benchmark. No trial counts inferred; no confidence interval reconstructed."
+  }
+}

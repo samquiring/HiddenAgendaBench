@@ -1,0 +1,22 @@
+Running 1 tasks...
+---------------------------------------------------------                       
+task (1 sample): hf-inference-providers/moonshotai/Kimi-K3:deepinfra            
+max_retries: 0, timeout: 600, max_connections: 1, max_tokens: 32768,            
+reasoning_effort: high, time_limit: 900, dataset: (samples)                     
+---------------------------------------------------------                       
+                                                                                
+generate     | Steps:   1/1 100% | Samples:   0/  1 | hf-inference-providers:  0/ 1 | HTTP retries: 0
+
+---------------------------------------------------------                       
+task (1 sample): hf-inference-providers/moonshotai/Kimi-K3:deepinfra            
+max_retries: 0, timeout: 600, max_connections: 1, max_tokens: 32768,            
+reasoning_effort: high, time_limit: 900, dataset: (samples)                     
+                                                                                
+total time:                               0:00:07                               
+hf-inference-providers/moonshotai/Kimi-…  763 tokens [I: 350, CW: 0, CR: 0, O:  
+                                        413, R: 260]                            
+                                                                                
+Log:                                                                            
+runs/trivial-aux-20261023/kimi/actors/2026-10-23T05-24-58-00-00_task_aJcmWSRMym…
+---------------------------------------------------------                       
+                                                                                

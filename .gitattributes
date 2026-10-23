@@ -1,2 +1,6 @@
 # Preserve the frozen snapshot byte-for-byte, including generated CSV/SVG whitespace.
 offical_run/judge-v2-provider-repaired/** -text -whitespace linguist-generated=true
+offical_run/judge-v2-empty-cot-policy/** -text -whitespace linguist-generated=true
+offical_run/false-positive-threshold-0.5/** -text -whitespace linguist-generated=true
+offical_run/trivial-aux-20261023/** -text -whitespace linguist-generated=true
+offical_run/illustrative-sabotage-comparison/** -text -whitespace linguist-generated=true

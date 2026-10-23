@@ -1,0 +1,15 @@
+series,label,kind,tokens,success_evasion_rate,interval_low,interval_high
+gray,GPT 5.5,screenshot_approximation,3700,0,0,0.44
+gray,GPT 5.5,screenshot_approximation,9400,0.06,0,0.18
+gray,GPT 5.5,screenshot_approximation,11800,0,0,0.1
+gray,GPT 5.5,screenshot_approximation,18500,0,0,0.06
+blue,GPT-5.6 Sol,screenshot_approximation,2200,0,0,0.36
+blue,GPT-5.6 Sol,screenshot_approximation,20000,0.03,0,0.18
+blue,GPT-5.6 Sol,screenshot_approximation,22000,0.03,0,0.12
+blue,GPT-5.6 Sol,screenshot_approximation,27500,0,0,0.1
+pink,GPT-6 Astra,screenshot_approximation,8700,0.72,0.56,0.84
+pink,GPT-6 Astra,screenshot_approximation,11300,0.47,0.32,0.63
+pink,GPT-6 Astra,screenshot_approximation,14000,0.43,0.28,0.57
+pink,GPT-6 Astra,screenshot_approximation,22000,0.2,0.12,0.29
+open_source_illustrative,All open-source models (illustrative),illustrative,1000,0,,
+open_source_illustrative,All open-source models (illustrative),illustrative,40000,0,,

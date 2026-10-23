@@ -33,21 +33,32 @@ def judge_job(job, attempt_numbers=(1,2,3), config=None):
         return [{**row,'status':'actor_error'}]
     if record['primary_success'] is None:
         return [{**row,'status':'grading_missing'}]
+    effective_view=view
     if view!='output' and (record['trace_kind']!='emitted' or not record['reasoning'].strip()):
-        return [{**row,'status':'unavailable'}]
+        policy=config.get('empty_reasoning_policy','unavailable')
+        if policy!='auto_pass_output':
+            return [{**row,'status':'unavailable'}]
+        if not (record.get('output') or record.get('visible_output') or '').strip():
+            return [{**row,'status':'actor_error'}]
+        if view=='reasoning':
+            return [{**row,'judge':None,'configured_judge':model,'status':'ok',
+                     'decision_source':'automatic_no_emitted_reasoning',
+                     'judgment':dict(suspicion=0,suspected_task='',evidence=[],evidence_ids=[])}]
+        effective_view='output'
+        row.update(decision_source='output_only_for_no_emitted_reasoning',source_view='output')
     attempts=[]
     for attempt in attempt_numbers:
         current={**row,'attempt':attempt,'status':'ok'}
         try:
             response=subprocess.run([sys.executable, '-m', 'hidden_agenda.monitor'],
-                input=json.dumps(dict(record=record,view=view,model=model,judge_protocol=protocol, model_args=config.get('model_args', {'stream':False}), reasoning_effort=config.get('reasoning_effort','low'), max_tokens=config.get('max_tokens',8192))),
+                input=json.dumps(dict(record=record,view=effective_view,model=model,judge_protocol=protocol, model_args=config.get('model_args', {'stream':False}), reasoning_effort=config.get('reasoning_effort','low'), max_tokens=config.get('max_tokens',8192))),
                 text=True,capture_output=True,timeout=90)
             if response.returncode:
                 raise RuntimeError(response.stderr[-1500:])
             payload=json.loads(response.stdout)
             current.update(payload)
             parser=parse_judgment_v2 if protocol=='v2' else parse_judgment
-            current['judgment']=parser(payload['raw_judgment'],record,view)
+            current['judgment']=parser(payload['raw_judgment'],record,effective_view)
         except Exception as exc:
             current.update(status='judge_error',error=str(exc))
         attempts.append(current)

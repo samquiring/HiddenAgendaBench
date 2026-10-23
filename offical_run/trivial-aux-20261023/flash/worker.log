@@ -1,0 +1,22 @@
+Running 1 tasks...
+---------------------------------------------------------                       
+task (1 sample): hf-inference-providers/deepseek-ai/DeepSeek-V4.1-Flash:novita  
+max_retries: 0, timeout: 600, max_connections: 1, max_tokens: 32768,            
+reasoning_effort: low, time_limit: 900, dataset: (samples)                      
+---------------------------------------------------------                       
+                                                                                
+generate     | Steps:   1/1 100% | Samples:   0/  1 | hf-inference-providers:  0/ 1 | HTTP retries: 0
+
+---------------------------------------------------------                       
+task (1 sample): hf-inference-providers/deepseek-ai/DeepSeek-V4.1-Flash:novita  
+max_retries: 0, timeout: 600, max_connections: 1, max_tokens: 32768,            
+reasoning_effort: low, time_limit: 900, dataset: (samples)                      
+                                                                                
+total time:                               0:00:05                               
+hf-inference-providers/deepseek-ai/Deep…  743 tokens [I: 292, CW: 0, CR: 0, O:  
+                                        451, R: 307]                            
+                                                                                
+Log:                                                                            
+runs/trivial-aux-20261023/flash/actors/2026-10-23T05-24-58-00-00_task_nBXtxKVr2…
+---------------------------------------------------------                       
+                                                                                

@@ -16,7 +16,7 @@ def failed_call(row):
     return row['actor_status'] != 'ok' or not (row.get('output') or '').strip()
 
 
-def repair(source, output, timeout=None, time_limit=None, actor_override=None):
+def repair(source, output, timeout=None, time_limit=None, actor_override=None, partition=None):
     from inspect_ai import Task, eval
     from inspect_ai.dataset import Sample
     from inspect_ai.model import get_model
@@ -33,7 +33,7 @@ def repair(source, output, timeout=None, time_limit=None, actor_override=None):
     with (output / '.repair.lock').open('a') as lock:
         fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
         records = rows(source / 'trajectories.jsonl')
-        targets = [r for r in records if failed_call(r)]
+        targets = [r for r in records if failed_call(r) and (partition is None or r['partition']==partition)]
         plan = dict(source=str(source), attempts=1,
                     selection='Actor error or empty final response, independent of grades and monitor outcomes. Nonempty formatting/answer failures are not retried.',
                     inputs={name: hashlib.sha256((source/name).read_bytes()).hexdigest()
@@ -43,6 +43,8 @@ def repair(source, output, timeout=None, time_limit=None, actor_override=None):
             plan.update(timeout_override=timeout,time_limit_override=time_limit)
         if actor_override is not None:
             plan['actor_override'] = actor_override
+        if partition is not None:
+            plan['partition_filter'] = partition
         plan_path = output / 'actor-retry-plan.json'
         if plan_path.exists() and json.loads(plan_path.read_text()) != plan:
             raise ValueError('Frozen retry plan differs')
@@ -149,5 +151,6 @@ if __name__ == '__main__':
     parser.add_argument('--timeout', type=int, help='Explicit request-timeout override for a separate repair round')
     parser.add_argument('--time-limit', type=int, help='Explicit sample wall-clock limit override for a separate repair round')
     parser.add_argument('--actor', help='Explicit alternate provider route for the same model; recorded per repaired response')
+    parser.add_argument('--partition',choices=('calibration','evaluation'),help='Retry only failed calls in this partition')
     args = parser.parse_args()
-    repair(args.source,args.output,args.timeout,args.time_limit,args.actor)
+    repair(args.source,args.output,args.timeout,args.time_limit,args.actor,args.partition)
