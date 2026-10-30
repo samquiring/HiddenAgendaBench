@@ -1,6 +1,7 @@
 # Phase-2 preparation
 
 See [the experiment plan](../../docs/experiments/sft-monitorability-plan.md).
+For the completed edited-SFT pilot, see [results and limitations](../../docs/experiments/qwen27b-edited-sft-results.md).
 
 The API baseline uses the frozen 100 evaluation pairs plus 30 clean calibration
 cases. Credentials are read from `.env`; no Runpod resources are created.
@@ -139,3 +140,37 @@ scheduling work after four consecutive network-failed jobs. The original strict
 evidence-ID validation still applies. `apparent-pass-inspections.json` contains
 separate assistant trace inspections, when present; these never overwrite judge
 scores and are not blinded human annotations.
+
+## Edit successful training traces and test detection
+
+```sh
+.venv/bin/python -m hidden_agenda.edit_traces --workers 8
+```
+
+Selects the 211 jointly successful responses from
+`runs/qwen38-27b-mbpp-training-judged-v1/graded.jsonl`. A separate LLM edits
+emitted reasoning to remove auxiliary-task evidence; the fixed v2 monitor then
+judges the edited reasoning plus original visible output without the private
+question. Results append to `runs/qwen38-27b-training-edited-v1/results.jsonl`;
+open `review.html` in that directory for original/edited traces and judgments.
+This is a post-hoc editing experiment. Original correctness grades are inherited.
+Resume skips saved results, including errors; errors are displayed as unavailable.
+
+## One-epoch edited SFT on H100
+
+`scripts/phase2/train_edited_unsloth.py` runs on the GPU Pod, reads 211 examples
+from `/workspace/edited-sft/train.jsonl`, and trains response tokens only with
+Unsloth 4-bit QLoRA (rank 16, alpha 16, learning rate 2e-4, batch 1, accumulation 4,
+seed 3407, one epoch). Prompts contain the original dual-task instructions;
+completion targets contain edited reasoning and the original full final response,
+including the auxiliary submission. Examples over 8192 tokens fail preparation.
+Checkpoints save every 10 optimizer steps, plus the final adapter. The companion
+`sync_sft_checkpoints.py` copies only checkpoints marked `SAVE_COMPLETE` locally.
+
+After `TRAIN_DONE.json` exists, `eval_edited_adapter.py` generates fresh responses
+for all original 256 questions with medium thinking, temperature 1, top-p .95,
+top-k 20, and an 8192 generated-token cap. `score_adapter_eval.py` grades exported
+responses using the existing isolated Docker MBPP tests and the fixed DeepSeek
+v2 monitor in reasoning-only and combined views at suspicion > .5. This is a
+training-set evaluation, not held-out generalization. Original API responses use
+a different inference stack, so a before/after comparison is descriptive.

@@ -1,8 +1,8 @@
 # Phase 2: SFT and auxiliary-task monitorability
 
-Status: pilot preparation started, 2026-10-25. No training or paid Runpod resources
-have been launched. Target total spend is below $100, including failed runs.
-Implementation and measured throughput must precede SFT.
+Historical planning document, started 2026-10-25. The edited-SFT pilot has since
+been run; see [the results](qwen27b-edited-sft-results.md) for its current status
+and limitations. The original budget target was below $100, including failures.
 
 ## Requested first-stage amendment (2026-10-25)
 
