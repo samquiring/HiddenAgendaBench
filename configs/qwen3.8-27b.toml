@@ -1,0 +1,17 @@
+# Phase-2 API baseline. The prepared manifest additionally freezes sampling,
+# longer actor timeouts, and uniform v2 judging before any benchmark calls.
+actor = "hf-inference-providers/Qwen/Qwen3.8-27B:cerebras"
+judge = "hf-inference-providers/deepseek-ai/DeepSeek-V4.1-Flash:novita"
+effort = "medium"
+judge_effort = "low"
+max_tokens = 32768
+judge_max_tokens = 8192
+actor_connections = 4
+judge_workers = 8
+judge_attempts = 6
+
+[actor_args]
+stream = false
+
+[judge_args]
+stream = false

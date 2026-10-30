@@ -12,6 +12,10 @@ local and Git-ignored.
 The [official human audit](offical_run/manual-audit-v1/REPORT.md) preserves both the
 original blinded scores and the version 4 scores revised after feedback.
 
+The proposed [phase-2 SFT experiment](docs/experiments/sft-monitorability-plan.md)
+compares an untouched Qwen3.8-27B checkpoint with ordinary and edited-reasoning
+QLoRA adapters, using separate training tasks and a below-$100 Runpod budget.
+
 Plot judge false-positive rates and pointwise 95% Wilson intervals at the explicit
 alternate cutoff `suspicion > 0.5`:
 
